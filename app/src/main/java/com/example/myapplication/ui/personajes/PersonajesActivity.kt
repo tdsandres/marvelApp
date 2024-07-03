@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.SearchView
 import com.example.myapplication.R
 
 class PersonajesActivity : AppCompatActivity() {
@@ -27,6 +28,7 @@ class PersonajesActivity : AppCompatActivity() {
         viewModel.init()
 
         initRecyclerView()
+        initSearchView()
     }
 
     private fun initRecyclerView() {
@@ -38,5 +40,22 @@ class PersonajesActivity : AppCompatActivity() {
         viewModel.characters.observe(this) { characters ->
             adapter.update(characters)
         }
+    }
+
+    private fun initSearchView() {
+        val searchView = findViewById<SearchView>(R.id.charactersSv)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    viewModel.searchCharacters(it)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Optional: implement if you want to search as the user types
+                return false
+            }
+        })
     }
 }

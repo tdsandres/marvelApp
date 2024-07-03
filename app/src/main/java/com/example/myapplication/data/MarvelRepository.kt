@@ -6,9 +6,12 @@ import com.example.myapplication.model.Comic
 class MarvelRepository {
     private val marvelDs = MarvelDataSource()
 
-    suspend fun getCharacters() : List<Character>{
-        return marvelDs.getCharacters()
+// MarvelRepository.kt
+
+    suspend fun getCharacters(nameStartsWith: String? = null): List<Character> {
+        return marvelDs.getCharacters(nameStartsWith)
     }
+
 
     suspend fun getCharacterById(characterId: Int) : Character?{
         return marvelDs.getCharacterById(characterId)

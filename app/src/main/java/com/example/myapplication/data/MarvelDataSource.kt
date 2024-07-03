@@ -1,4 +1,5 @@
 package com.example.myapplication.data
+
 import android.util.Log
 import com.example.myapplication.model.Character
 import com.example.myapplication.model.Comic
@@ -6,9 +7,6 @@ import com.example.myapplication.model.Thumbnail
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import retrofit2.Response
-import retrofit2.http.GET
 
 class MarvelDataSource {
 
@@ -30,10 +28,10 @@ class MarvelDataSource {
 
     val api = retrofit.create(MarvelAPI::class.java)
 
-    suspend fun getCharacters(): List<Character> {
+    suspend fun getCharacters(nameStartsWith: String? = "a"): List<Character> {
         Log.d("MarvelAPI", "Characters Datasource Get")
         try {
-            val response = api.getCharacters()
+            val response = api.getCharacters(nameStartsWith = nameStartsWith)
             if (response.isSuccessful) {
                 val characters = response.body()?.data?.results ?: emptyList()
                 Log.d("MarvelAPI", "Characters received: $characters")
@@ -47,24 +45,24 @@ class MarvelDataSource {
         return emptyList()
     }
 
-    suspend fun getCharacterById(characterId : Int): Character? {
-        Log.d("MarvelApi","Character Datasource Get")
-        try{
+    suspend fun getCharacterById(characterId: Int): Character? {
+        Log.d("MarvelApi", "Character Datasource Get")
+        try {
             val response = api.getCharacterById(characterId)
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 val character = response.body()?.data?.results?.firstOrNull()
                 Log.d("MarvelAPI", "Character received: $character")
                 return character
             } else {
                 Log.e("MarvelAPI", "Error: ${response.errorBody()?.string()}")
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("MarvelAPI", "Error fetching character BY ID", e)
         }
-        return Character(1,"a","a", Thumbnail("a","a"))
+        return Character(1, "a", "a", Thumbnail("a", "a"))
     }
 
-    suspend fun getComics(): List<Comic>{
+    suspend fun getComics(): List<Comic> {
         Log.d("MarvelAPI", "Comics Datasource Get")
         try {
             val response = api.getComics()

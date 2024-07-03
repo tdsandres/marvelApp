@@ -3,7 +3,7 @@ package com.example.myapplication.ui.personajes
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.Character
@@ -21,9 +21,7 @@ class PersonajeAdapter(
         return PersonajeViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return characters.size
-    }
+    override fun getItemCount(): Int = characters.size
 
     override fun onBindViewHolder(holder: PersonajeViewHolder, position: Int) {
         val character = characters[position]

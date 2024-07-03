@@ -11,29 +11,38 @@ import kotlinx.coroutines.newSingleThreadContext
 import kotlin.coroutines.CoroutineContext
 
 class PersonajesViewModel : ViewModel() {
+
     private val marvelRepo = MarvelRepository()
-    var characters: MutableLiveData<List<Character>> = MutableLiveData<List<Character>>()
-
-
+    var characters: MutableLiveData<List<Character>> = MutableLiveData()
 
     private val coroutineContext: CoroutineContext = newSingleThreadContext("chars")
     private val scope = CoroutineScope(coroutineContext)
 
-    fun fetchCharacters(){
+    fun fetchCharacters(nameStartsWith: String? = "a") {
         scope.launch {
             try {
-                val result = marvelRepo.getCharacters()
+                val result = marvelRepo.getCharacters(nameStartsWith)
                 characters.postValue(result)
-                Log.d("TPO-LOG", "Fetch Correcto ${characters}")
-            } catch (e: Exception){
-                Log.e("TPO-LOG",e.toString())
+                Log.d("TPO-LOG", "Fetch Correcto $characters")
+            } catch (e: Exception) {
+                Log.e("TPO-LOG", "Error fetching characters", e)
             }
         }
     }
 
-    fun init(){
-        fetchCharacters()
-
+    fun searchCharacters(query: String) {
+        scope.launch {
+            try {
+                val result = marvelRepo.getCharacters(nameStartsWith = query)
+                characters.postValue(result)
+                Log.d("TPO-LOG", "Búsqueda correcta: $query")
+            } catch (e: Exception) {
+                Log.e("TPO-LOG", "Error en la búsqueda: $query", e)
+            }
+        }
     }
 
+    fun init() {
+        fetchCharacters()
+    }
 }

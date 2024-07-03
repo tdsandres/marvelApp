@@ -1,4 +1,4 @@
-<!-- activity_personajes.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,7 +8,11 @@
     android:padding="16dp"
     tools:context=".ui.personajes.PersonajesActivity">
 
-    <!-- RecyclerView para mostrar la lista de personajes -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/charactersSv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/personajesRv"
         android:layout_width="match_parent"
