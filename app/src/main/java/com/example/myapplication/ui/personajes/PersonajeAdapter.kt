@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.personajes
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -26,6 +27,15 @@ class PersonajeAdapter(
     override fun onBindViewHolder(holder: PersonajeViewHolder, position: Int) {
         val character = characters[position]
         holder.bind(character)
+
+        holder.itemView.findViewById<ImageView>(R.id.imagePersonajeVH).setOnClickListener {
+            val intent = Intent(context, PersonajeDetailActivity::class.java).apply {
+                putExtra("CHARACTER_NAME", character.name)
+                putExtra("CHARACTER_DESCRIPTION", character.description)
+                putExtra("CHARACTER_THUMBNAIL", character.thumbnail.path + "." + character.thumbnail.extension)
+            }
+            context.startActivity(intent)
+        }
     }
 
     fun update(lista: List<Character>) {

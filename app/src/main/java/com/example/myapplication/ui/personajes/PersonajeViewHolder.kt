@@ -8,14 +8,12 @@ import com.example.myapplication.R
 import com.example.myapplication.model.Character
 import com.squareup.picasso.Picasso
 
-class PersonajeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val nameTextView: TextView = itemView.findViewById(R.id.txtNombrePersonajeVH)
-    private val imageView: ImageView = itemView.findViewById(R.id.imagePersonajeVH)
+class PersonajeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private val characterName: TextView = view.findViewById(R.id.txtNombrePersonajeVH)
+    private val characterThumbnail: ImageView = view.findViewById(R.id.imagePersonajeVH)
 
     fun bind(character: Character) {
-        nameTextView.text = character.name
-        Picasso.get()
-            .load("${character.thumbnail.path}.${character.thumbnail.extension}")
-            .into(imageView)
+        characterName.text = character.name
+        Picasso.get().load(character.thumbnail.path + "." + character.thumbnail.extension).into(characterThumbnail)
     }
 }
