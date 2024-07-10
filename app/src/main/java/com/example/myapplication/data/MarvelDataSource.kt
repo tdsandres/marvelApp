@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MarvelDataSource {
 
     private val PUBLIC_KEY = "bb5f5339d78067c6568d2ad3cc2f3777"
-    private val PRIVATE_KEY = "918ccdcc4d038d389f1476eefc5846b950ad4125"
+    //private val PRIVATE_KEY = "918ccdcc4d038d389f1476eefc5846b950ad4125"
     private val TS = "1"
     private val HASH = "6906841bb8c3289bada4ec3ab0994247"
     private val API_BASE_URL = "https://gateway.marvel.com:443"
@@ -45,21 +45,22 @@ class MarvelDataSource {
         return emptyList()
     }
 
-    suspend fun getCharacterById(characterId: Int): Character? {
-        Log.d("MarvelApi", "Character Datasource Get")
+    suspend fun getCharacterById(characterId: Int) : List<Character> {
         try {
             val response = api.getCharacterById(characterId)
-            if (response.isSuccessful) {
-                val character = response.body()?.data?.results?.firstOrNull()
-                Log.d("MarvelAPI", "Character received: $character")
+            if(response.isSuccessful){
+                val character = response.body()?.data?.results ?: emptyList()
+                Log.d("MarvelAPI", "CharactersById Datasource Get $character")
                 return character
-            } else {
-                Log.e("MarvelAPI", "Error: ${response.errorBody()?.string()}")
             }
-        } catch (e: Exception) {
-            Log.e("MarvelAPI", "Error fetching character BY ID", e)
+            else{
+                throw Error()
+            }
         }
-        return Character(1, "a", "a", Thumbnail("a", "a"))
+        catch (e :Exception){
+            Log.e("MarvelAPI", "Error fetching characterById", e)
+            return emptyList()
+        }
     }
 
     suspend fun getComics(): List<Comic> {

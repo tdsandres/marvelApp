@@ -22,7 +22,7 @@ class PersonajeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonajeViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_personaje, parent, false)
-        return PersonajeViewHolder(view,listener)
+        return PersonajeViewHolder(view,listener, viewModel)
     }
 
     override fun getItemCount(): Int = characters.size

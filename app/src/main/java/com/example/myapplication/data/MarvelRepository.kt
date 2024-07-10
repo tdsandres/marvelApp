@@ -13,7 +13,7 @@ class MarvelRepository {
     }
 
 
-    suspend fun getCharacterById(characterId: Int) : Character?{
+    suspend fun getCharacterById(characterId: Int): List<Character>{
         return marvelDs.getCharacterById(characterId)
     }
 

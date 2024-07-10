@@ -12,7 +12,7 @@ import com.example.myapplication.R
 import com.example.myapplication.model.Character
 import com.squareup.picasso.Picasso
 
-class PersonajeViewHolder(view: View,private val listener: OnItemClickListener) : RecyclerView.ViewHolder(view) {
+class PersonajeViewHolder(view: View,private val listener: OnItemClickListener, private val viewModel : PersonajesViewModel) : RecyclerView.ViewHolder(view) {
     private val characterName: TextView = view.findViewById(R.id.txtNombrePersonajeVH)
     private val characterThumbnail: ImageView = view.findViewById(R.id.imagePersonajeVH)
     val characterId : MutableLiveData<Int> = MutableLiveData()
@@ -27,6 +27,7 @@ class PersonajeViewHolder(view: View,private val listener: OnItemClickListener) 
         favoritoBtn.setOnClickListener{
             characterId.value.let {
             Log.d("TPO-MARVEL" ,"ID personaje $it")
+                viewModel.saveFavorite(it.toString().toInt())
             }
         }
     }

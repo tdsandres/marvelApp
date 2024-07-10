@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.R
+import com.example.myapplication.ui.favoritos.FavoritosActivity
 import com.example.myapplication.ui.personajes.PersonajesActivity
 
 
@@ -20,6 +21,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var providerTextView: TextView
     private lateinit var logOutButton: Button
     private lateinit var personajesButton : Button
+    private lateinit var favoritosButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class HomeActivity : AppCompatActivity() {
         emailTextView = findViewById(R.id.emailTextView)
         logOutButton = findViewById(R.id.logOutButton)
         personajesButton = findViewById(R.id.personajesButton)
+        favoritosButton = findViewById(R.id.favoritosButton)
 
         val bundle = intent.extras
         val email = bundle?.getString("email")
@@ -54,10 +57,17 @@ class HomeActivity : AppCompatActivity() {
         personajesButton.setOnClickListener {
             showPersonajes()
         }
+        favoritosButton.setOnClickListener {
+            showFavoritos()
+        }
     }
 
     private fun showPersonajes(){
         val personajesIntent = Intent(this, PersonajesActivity::class.java)
         startActivity(personajesIntent)
+    }
+    private fun showFavoritos(){
+        val favoritosIntent = Intent(this, FavoritosActivity::class.java)
+        startActivity(favoritosIntent)
     }
 }

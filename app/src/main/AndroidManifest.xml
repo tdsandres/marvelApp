@@ -19,7 +19,7 @@
             android:name=".ui.personajes.PersonajeDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.FavoritosActivity"
+            android:name=".ui.favoritos.FavoritosActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ComicsActivity"
