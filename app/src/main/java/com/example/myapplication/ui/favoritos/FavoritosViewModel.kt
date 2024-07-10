@@ -9,8 +9,10 @@ import com.example.myapplication.data.MarvelRepository
 import com.example.myapplication.model.Character
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 class FavoritosViewModel : ViewModel(){
@@ -33,19 +35,27 @@ class FavoritosViewModel : ViewModel(){
             }
         }
     }
-
-    fun getCharacterById(id : Int){
-        viewModelScope.launch {
+    suspend fun fetchCharacterById(id: Int): Character? {
+        return withContext(Dispatchers.IO) {
             try {
-                Log.d("TPO-LOG","Favorito correctamente obtenido $id")
                 marvelRepo.getCharacterById(id)
-            }
-            catch (e : Exception){
-                Log.e("TPO-LOG","Ocurrio un error al traer los personajes favoritos $e")
+            } catch (e: Exception) {
+                Log.e("LOG-TP0", "(FavsViewModel) Ocurrió un error: " + e)
+                null
             }
         }
     }
+    fun saveFavorite(id : Int){
+        viewModelScope.launch {
+            try {
+                favRepo.save(id,user)
+            }
+            catch (e : Exception){
+                Log.e("TPO-MARVEL", "Error al guardar el favorito $e")
+            }
+        }
 
+    }
     init{
         fetchCharacters()
     }

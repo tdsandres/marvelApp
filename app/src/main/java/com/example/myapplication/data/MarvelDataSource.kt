@@ -45,13 +45,13 @@ class MarvelDataSource {
         return emptyList()
     }
 
-    suspend fun getCharacterById(characterId: Int) : List<Character> {
+    suspend fun getCharacterById(characterId: Int) : Character? {
         try {
             val response = api.getCharacterById(characterId)
             if(response.isSuccessful){
                 val character = response.body()?.data?.results ?: emptyList()
                 Log.d("MarvelAPI", "CharactersById Datasource Get $character")
-                return character
+                return character[0]
             }
             else{
                 throw Error()
@@ -59,7 +59,7 @@ class MarvelDataSource {
         }
         catch (e :Exception){
             Log.e("MarvelAPI", "Error fetching characterById", e)
-            return emptyList()
+            return null
         }
     }
 

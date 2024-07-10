@@ -1,6 +1,7 @@
 package com.example.myapplication.data
 
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FieldValue
 import kotlinx.coroutines.tasks.await
@@ -38,6 +39,7 @@ class FavoritoDataSource {
                     // Eliminar el ID si ya está en la lista
                     userDocRef.update("favoritos", FieldValue.arrayRemove(id)).await()
                     Log.d("TPO-MARVEL", "Id eliminado satisfactoriamente")
+
                 } else {
                     // Agregar el ID si no está en la lista
                     userDocRef.update("favoritos", FieldValue.arrayUnion(id)).await()
